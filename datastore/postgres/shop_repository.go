@@ -11,10 +11,19 @@ type shopRepository struct {
 	executor sql_datastore.Executor
 }
 
+var shops = []domain.Shop{
+	domain.Shop{
+		Name: "unverpackt",
+	},
+	domain.Shop{
+		Name: "unverpackt2",
+	},
+}
+
 func NewShopRepository(executor sql_datastore.Executor) *shopRepository {
 	return &shopRepository{executor: executor}
 }
 
 func (s *shopRepository) FindShopsByQuery(ctx context.Context, search string, lat float32, long float32) ([]domain.Shop, error) {
-	return nil, nil
+	return shops, nil
 }

@@ -29,5 +29,11 @@ func main() {
 
 	searchShopService := search_shop.NewService(shopRepository)
 
-	rest.NewRestAPI(searchShopService, "8080")
+	restAPI, err := rest.NewRestAPI(searchShopService, "8080")
+
+	if err != nil {
+		log.Fatal("server could not be started", err)
+	}
+
+	restAPI.Start()
 }
