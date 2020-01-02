@@ -18,9 +18,10 @@ func main() {
 		os.Getenv("DATABASE_NAME"),
 		os.Getenv("DATABASE_PASSWORD"),
 	)
+
 	if err != nil {
 		log.Fatal(
-			"could not open datastore connection",
+			"could not open datastore connection: ",
 			err,
 		)
 	}
@@ -29,10 +30,10 @@ func main() {
 
 	searchShopService := search_shop.NewService(shopRepository)
 
-	restAPI, err := rest.NewRestAPI(searchShopService, "8080")
+	restAPI, err := rest.NewRestAPI(searchShopService, os.Getenv("API_PORT"))
 
 	if err != nil {
-		log.Fatal("server could not be started", err)
+		log.Fatal("server could not be started: ", err)
 	}
 
 	restAPI.Start()
