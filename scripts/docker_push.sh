@@ -11,14 +11,14 @@ function image_with_tag_exists () {
   return 1
 }
 
-image_with_tag_exists "der-nackte-halloumi/api:latest"
+image_with_tag_exists "dernacktehalloumi/api:latest"
 if [ "$?" -eq 0 ]; then
-  echo "--> pushing der-nackte-halloumi/api:latest"
-  docker push der-nackte-halloumi/api:latest
+  echo "--> pushing dernacktehalloumi/api:latest"
+  docker push dernacktehalloumi/api:latest
 fi
 
-image_with_tag_exists "der-nackte-halloumi/api:$TRAVIS_BUILD_NUMBER"
+image_with_tag_exists "dernacktehalloumi/api:$TRAVIS_BUILD_NUMBER"
 if [ "$?" -eq 0 ]; then
-  echo "--> pushing der-nackte-halloumi/api:$TRAVIS_BUILD_NUMBER"
-  docker push der-nackte-halloumi/api:$TRAVIS_BUILD_NUMBER
+  echo "--> pushing dernacktehalloumi/api:$TRAVIS_BUILD_NUMBER"
+  docker push dernacktehalloumi/api:$TRAVIS_BUILD_NUMBER
 fi
