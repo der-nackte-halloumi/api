@@ -13,17 +13,14 @@ script:
   - docker build -t dernacktehalloumi/api:${TRAVIS_BUILD_NUMBER} .
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then docker build -t dernacktehalloumi/api:latest .; fi'
 
+after_success:
+  # TODO: only push tagged image
+  - bash scripts/docker_push.sh
+
 deploy:
   provider: script
   script:
-    - bash scripts/docker_push.sh
-    # TODO: deploy application
-    # - "TODO trigger deploy"
+    # TODO: push latest image as well
+    # TODO: trigger deploy application
   on:
     branch: master
-
-  provider: script
-  script: bash scripts/docker_push.sh
-  on:
-    all_branches: true
-    condition: type = pull_request
