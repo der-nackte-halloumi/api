@@ -2,6 +2,8 @@
 
 The API.
 
+[![Build Status](https://travis-ci.com/der-nackte-halloumi/api.svg?branch=master)](https://travis-ci.com/der-nackte-halloumi/api)
+
 ## File structure
 
 - `cmd`: entrypoints to the application (e.g. REST / RPC / CLI / ...)
