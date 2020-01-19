@@ -1,0 +1,29 @@
+language: go
+
+go:
+  - 1.x
+
+services:
+  - docker
+
+install: skip
+
+script:
+  # TODO: run tests
+  - docker build -t der-nackte-halloumi/api:${TRAVIS_BUILD_NUMBER}
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then docker build -t der-nackte-halloumi/api:latest; fi'
+
+deploy:
+  provider: script
+  script:
+    - bash scripts/docker_push.sh
+    # TODO: deploy application
+    # - "TODO trigger deploy"
+  on:
+    branch: master
+
+  provider: script
+  script: bash scripts/docker_push.sh
+  on:
+    all_branches: true
+    condition: type = pull_request
