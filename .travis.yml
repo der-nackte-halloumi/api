@@ -10,8 +10,8 @@ install: skip
 
 script:
   # TODO: run tests
-  - docker build -t dernacktehalloumi/api:${TRAVIS_BUILD_NUMBER}
-  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then docker build -t dernacktehalloumi/api:latest; fi'
+  - docker build -t dernacktehalloumi/api:${TRAVIS_BUILD_NUMBER} .
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then docker build -t dernacktehalloumi/api:latest .; fi'
 
 deploy:
   provider: script
