@@ -1,0 +1,32 @@
+language: go
+
+go:
+  - 1.x
+
+services:
+  - docker
+
+branches:
+  only:
+    - master
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_7ce11a41215f_key -iv $encrypted_7ce11a41215f_iv -in der-nackte-halloumi-api-travis.enc -out der-nackte-halloumi-api-travis -d
+
+install: skip
+
+script:
+  - docker build -t dernacktehalloumi/api:${TRAVIS_BUILD_NUMBER} .
+  - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then docker build -t dernacktehalloumi/api:latest .; fi
+
+after_success:
+  - bash scripts/docker_push.sh ${TRAVIS_BUILD_NUMBER}
+
+deploy:
+  provider: script
+  script:
+    - bash scripts/docker_push.sh latest
+    - chmod 400 der-nackte-halloumi-api-travis
+    - ssh -i der-nackte-halloumi-api-travis $SERVER_ADDRESS "docker-compose up --build -d api"
+  on:
+    branch: master
