@@ -23,10 +23,8 @@ after_success:
   - bash scripts/docker_push.sh ${TRAVIS_BUILD_NUMBER}
 
 deploy:
+  skip_cleanup: true
   provider: script
-  script:
-    - bash scripts/docker_push.sh latest
-    - chmod 400 der-nackte-halloumi-api-travis
-    - ssh -i der-nackte-halloumi-api-travis $SERVER_ADDRESS "docker-compose up --build -d api"
+  script: bash scripts/deploy.sh latest
   on:
     branch: master
