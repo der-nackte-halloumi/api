@@ -9,4 +9,4 @@ chmod 400 der-nackte-halloumi-api-travis
 echo $SERVER_PUBLIC_KEY >> $HOME/.ssh/known_hosts
 
 # restart service
-ssh -i der-nackte-halloumi-api-travis $SERVER_ADDRESS "docker-compose up --build -d api"
+ssh -i der-nackte-halloumi-api-travis $SERVER_ADDRESS "docker-compose pull api && docker-compose up --build -d api"
