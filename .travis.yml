@@ -28,3 +28,6 @@ deploy:
   script: bash scripts/deploy.sh latest
   on:
     branch: master
+
+notifications:
+  email: false
