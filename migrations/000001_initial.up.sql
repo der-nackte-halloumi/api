@@ -12,8 +12,8 @@ CREATE TABLE "shops_products" (
 CREATE TABLE "cities" (
   "id" uuid PRIMARY KEY,
   "country_id" uuid,
-  "lat" long,
-  "long" long
+  "lat" float,
+  "long" float
 );
 
 CREATE TABLE "countries" (
@@ -43,7 +43,7 @@ CREATE TABLE "categories_translations" (
 
 CREATE TABLE "locales" (
   "id" uuid PRIMARY KEY,
-  "locale" string
+  "locale" text
 );
 
 ALTER TABLE "shops" ADD FOREIGN KEY ("city_id") REFERENCES "cities" ("id");
