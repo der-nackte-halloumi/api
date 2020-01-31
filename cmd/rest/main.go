@@ -36,5 +36,6 @@ func main() {
 		log.Fatal("server could not be started: ", err)
 	}
 
+	log.Println("server started")
 	restAPI.Start()
 }
