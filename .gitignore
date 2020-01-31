@@ -15,6 +15,3 @@
 # vendor/
 
 .env
-
-# local docker volume if used with makefile
-db-api_data
