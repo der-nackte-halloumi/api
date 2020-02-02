@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"context"
+	"log"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/der-nackte-halloumi/api/datastore/sql_datastore"
@@ -23,7 +24,7 @@ func (s *shopRepository) FindShopsByQuery(ctx context.Context, search string, la
 	sql, args, err := sq.Select("id", "name").From("shops").Where(sq.Eq{"name": search}).ToSql()
 
 	if err != nil {
-		println(err)
+		log.Printf("creating sql statement for finding shops by query failed: %v", err)
 		return nil, err
 	}
 
@@ -48,7 +49,6 @@ func (s *shopRepository) FindShopsByQuery(ctx context.Context, search string, la
 		}
 
 		shops = append(shops, *shop.toDomain())
-		// shop.toDomain()
 	}
 
 	return shops, err
