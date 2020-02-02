@@ -35,7 +35,7 @@ func (s *shopRepository) FindShopsByQuery(ctx context.Context, search string, la
 		// if isEmptyResultSet(err) {
 		// 	return nil, nil
 		// }
-
+		log.Println("error when executing query for finding shops by query", err)
 		return nil, err
 	}
 
