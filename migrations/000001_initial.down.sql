@@ -8,7 +8,7 @@ ALTER TABLE "cities" DROP CONSTRAINT IF EXISTS "cities_country_id_fkey";
 
 ALTER TABLE "products" DROP CONSTRAINT IF EXISTS "products_category_id_fkey";
 
-ALTER TABLE "product_translations" DROP CONSTRAINT IF EXISTS ("product_translations_locale_id_fkey";
+ALTER TABLE "product_translations" DROP CONSTRAINT IF EXISTS "product_translations_locale_id_fkey";
 
 ALTER TABLE "product_translations" DROP CONSTRAINT IF EXISTS "product_translations_product_id_fkey";
 
