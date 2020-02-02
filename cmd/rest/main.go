@@ -30,12 +30,13 @@ func main() {
 
 	searchShopService := search_shop.NewService(shopRepository)
 
-	restAPI, err := rest.NewRestAPI(searchShopService, os.Getenv("API_PORT"))
+	apiPort := os.Getenv("API_PORT")
+	restAPI, err := rest.NewRestAPI(searchShopService, apiPort)
 
 	if err != nil {
 		log.Fatal("server could not be started: ", err)
 	}
 
-	log.Println("server started")
+	log.Printf("server started on port %s", apiPort)
 	restAPI.Start()
 }
