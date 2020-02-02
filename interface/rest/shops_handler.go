@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 
@@ -16,18 +17,26 @@ func NewShopsHandler(searchShopService search_shop.Service) *shopsHandler {
 }
 
 func (s *shopsHandler) Search(w http.ResponseWriter, req *http.Request) {
-	// validation
-	// logging
+	// TODO: logging
 	query := req.URL.Query()
+
+	// TODO: validation all inputs
 	search := query.Get("query")
 	lat, _ := strconv.ParseFloat(query.Get("lat"), 32)
 	long, _ := strconv.ParseFloat(query.Get("long"), 32)
 
-	result, err := s.searchShopService.FindShopsByQuery(req.Context(), search, float32(lat), float32(long))
-
-	if err != nil {
-		//
+	if len(search) == 0 {
+		respond(w, http.StatusOK, nil)
+		return
 	}
 
-	respondSuccess(w, http.StatusOK, result)
+	result, err := s.searchShopService.FindShopsByQuery(req.Context(), search, float32(lat), float32(long))
+	// TODO: log/track searches and len(result)
+
+	if err != nil {
+		log.Printf("error when searching shops: %v", err)
+		respond(w, http.StatusInternalServerError, err)
+	}
+
+	respond(w, http.StatusOK, result)
 }
