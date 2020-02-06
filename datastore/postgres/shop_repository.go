@@ -21,8 +21,7 @@ func (s *shopRepository) FindShopsByQuery(ctx context.Context, search string, la
 	// write some code here
 	var shops []domain.Shop
 
-	// TODO: use ILike in Where
-	sql, args, err := queryBuilder.Select("id", "name").From("shops").Where(sq.Like{"name": "%" + search + "%"}).ToSql()
+	sql, args, err := queryBuilder.Select("id", "name").From("shops").Where(sq.ILike{"name": "%" + search + "%"}).ToSql()
 
 	if err != nil {
 		log.Printf("creating sql statement for finding shops by query failed: %v", err)
