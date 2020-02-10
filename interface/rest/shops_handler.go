@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	rest "github.com/der-nackte-halloumi/api/interface/rest/models"
 	"github.com/der-nackte-halloumi/api/usecase/search_shop"
 )
 
@@ -41,5 +42,10 @@ func (s *shopsHandler) Search(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	respond(w, http.StatusOK, result)
+	var shops []*rest.Shop
+	for _, shop := range result {
+		shops = append(shops, rest.ShopFromDomain(shop))
+	}
+
+	respond(w, http.StatusOK, shops)
 }
