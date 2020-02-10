@@ -26,7 +26,8 @@ func (s *shopsHandler) Search(w http.ResponseWriter, req *http.Request) {
 	long, _ := strconv.ParseFloat(query.Get("long"), 32)
 
 	if len(search) == 0 {
-		respond(w, http.StatusOK, nil)
+		// TODO: make error object
+		respond(w, http.StatusBadRequest, "must provide a search query")
 		return
 	}
 
@@ -35,6 +36,7 @@ func (s *shopsHandler) Search(w http.ResponseWriter, req *http.Request) {
 
 	if err != nil {
 		log.Printf("error when searching shops: %v", err)
+		// TODO: return proper status code
 		respond(w, http.StatusInternalServerError, err)
 		return
 	}

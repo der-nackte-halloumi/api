@@ -18,23 +18,62 @@ func NewShopRepository(executor sql_datastore.Executor) *shopRepository {
 }
 
 func (s *shopRepository) FindShopsByQuery(ctx context.Context, search string, lat float32, long float32) ([]domain.Shop, error) {
-	// write some code here
 	var shops []domain.Shop
+	var productIds []string
 
-	sql, args, err := queryBuilder.Select("id", "name").From("shops").Where(sq.ILike{"name": "%" + search + "%"}).ToSql()
-
+	sql, args, err := queryBuilder.
+		Select("products.id").
+		Distinct().
+		From("products").
+		Join("categories_translations on categories_translations.category_id = products.category_id").
+		Join("products_translations on products_translations.product_id = products.id").
+		Where(sq.Or{
+			sq.ILike{"categories_translations.value": "%" + search + "%"},
+			sq.ILike{"products_translations.value": "%" + search + "%"},
+		}).ToSql()
 	if err != nil {
-		log.Printf("creating sql statement for finding shops by query failed: %v", err)
+		log.Printf("creating sql statement for matching products failed: %v", err)
 		return nil, err
 	}
 
 	rows, err := s.executor.QueryxContext(ctx, sql, args...)
 
 	if err != nil {
-		// TODO:
-		// if isEmptyResultSet(err) {
-		// 	return nil, nil
-		// }
+		log.Printf("error when executing query for finding matching product ids", err)
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var id string
+		err = rows.Scan(&id)
+		if err != nil {
+			return nil, err
+		}
+
+		productIds = append(productIds, id)
+	}
+
+	if len(productIds) == 0 {
+		return nil, nil
+	}
+
+	sql, args, err = queryBuilder.
+		Select("shops.id", "shops.name", "shops.address", "shops.lat", "shops.long").
+		Distinct().
+		From("shops").
+		Join("shops_products on shops.id = shops_products.shop_id").
+		Where(sq.Eq{"shops_products.product_id": productIds}).ToSql()
+
+	if err != nil {
+		log.Printf("creating sql statement for finding shops by query failed: %v", err)
+		return nil, err
+	}
+
+	rows, err = s.executor.QueryxContext(ctx, sql, args...)
+
+	if err != nil {
 		log.Println("error when executing query for finding shops by query", err)
 		return nil, err
 	}

@@ -19,7 +19,7 @@ func NewRestAPI(
 ) (*RestAPI, error) {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/shops", NewShopsHandler(searchShopService).Search).Methods(http.MethodGet)
+	router.HandleFunc("/search/shops", NewShopsHandler(searchShopService).Search).Methods(http.MethodGet)
 
 	server := &http.Server{
 		Addr:         "0.0.0.0:" + port,
