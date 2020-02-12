@@ -21,14 +21,21 @@ func (s *shopsHandler) Search(w http.ResponseWriter, req *http.Request) {
 	// TODO: logging
 	query := req.URL.Query()
 
-	// TODO: validation all inputs
+	// TODO: validation of all inputs
 	search := query.Get("query")
 	lat, _ := strconv.ParseFloat(query.Get("lat"), 32)
 	long, _ := strconv.ParseFloat(query.Get("long"), 32)
 
 	if len(search) == 0 {
-		// TODO: make error object
-		respond(w, http.StatusBadRequest, "must provide a search query")
+		result, err := s.searchShopService.GetShops(req.Context())
+
+		if err != nil {
+			log.Printf("error when retrieving all shops: %v", err)
+			respond(w, http.StatusInternalServerError, err)
+			return
+		}
+
+		respond(w, http.StatusOK, result)
 		return
 	}
 

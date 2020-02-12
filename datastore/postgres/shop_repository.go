@@ -17,6 +17,38 @@ func NewShopRepository(executor sql_datastore.Executor) *shopRepository {
 	return &shopRepository{executor: executor}
 }
 
+func (s *shopRepository) GetShops(ctx context.Context) ([]domain.Shop, error) {
+	var shops []domain.Shop
+
+	sql, args, err := queryBuilder.Select("id", "name", "address", "lat", "long").From("shops").ToSql()
+
+	if err != nil {
+		log.Printf("creating sql statement for retrieving all shops failed: %v", err)
+		return nil, err
+	}
+
+	rows, err := s.executor.QueryxContext(ctx, sql, args...)
+
+	if err != nil {
+		log.Printf("error when executing query for retrieving all shops: %v", err)
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var shop Shop
+		err = rows.StructScan(&shop)
+		if err != nil {
+			return shops, err
+		}
+
+		shops = append(shops, *shop.toDomain())
+	}
+
+	return shops, nil
+}
+
 func (s *shopRepository) FindShopsByQuery(ctx context.Context, search string, lat float32, long float32) ([]domain.Shop, error) {
 	var shops []domain.Shop
 	var productIds []string
@@ -31,15 +63,16 @@ func (s *shopRepository) FindShopsByQuery(ctx context.Context, search string, la
 			sq.ILike{"categories_translations.value": "%" + search + "%"},
 			sq.ILike{"products_translations.value": "%" + search + "%"},
 		}).ToSql()
+
 	if err != nil {
-		log.Printf("creating sql statement for matching products failed: %v", err)
+		log.Printf("creating sql statement for finding product ids by query failed: %v", err)
 		return nil, err
 	}
 
 	rows, err := s.executor.QueryxContext(ctx, sql, args...)
 
 	if err != nil {
-		log.Printf("error when executing query for finding matching product ids", err)
+		log.Printf("error when executing query for product ids by query", err)
 		return nil, err
 	}
 

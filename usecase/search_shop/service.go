@@ -8,6 +8,7 @@ import (
 
 type Service interface {
 	FindShopsByQuery(ctx context.Context, search string, lat float32, long float32) ([]domain.Shop, error)
+	GetShops(ctx context.Context) ([]domain.Shop, error)
 }
 
 type service struct {
@@ -22,6 +23,11 @@ func NewService(repository Repository) *service {
 }
 
 func (s *service) FindShopsByQuery(ctx context.Context, search string, lat float32, long float32) ([]domain.Shop, error) {
-	// logging, access control, validation
+	// TODO: logging, access control, validation
 	return s.repository.FindShopsByQuery(ctx, search, lat, long)
+}
+
+func (s *service) GetShops(ctx context.Context) ([]domain.Shop, error) {
+	// TODO: logging, access control, validation
+	return s.repository.GetShops(ctx)
 }
