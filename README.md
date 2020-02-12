@@ -25,7 +25,18 @@ make db_clean
 make db_cli
 # runs all migrations in the local database container
 make migrations
+# runs the seed script, requires psql with same version as dockerised database in path
+make seeds
 # runs the acutal API
+make run
+```
+
+It’s a lot of commands, but to get everything running one could execute the following commands one after each other:
+
+```sh
+make db_create
+make db_start
+make db_seeds
 make run
 ```
 

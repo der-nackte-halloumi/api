@@ -1,7 +1,7 @@
 include .env
 export
 
-.PHONY: db_create db_start db_stop db_clean db_cli migrations migrations_down run
+.PHONY: db_create db_start db_stop db_clean db_cli migrations migrations_down seeds run
 
 db_create:
 	docker create --name db-api \
@@ -33,6 +33,9 @@ migrations_down:
 	docker run -v $(shell pwd)/migrations:/migrations --network host migrate/migrate:v4.8.0 \
 		-path=/migrations/ \
 		-database postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?sslmode=disable down -all
+
+seeds:
+	psql postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?sslmode=disable -a -f seeds/initial.sql
 
 run:
 	go run cmd/rest/main.go
