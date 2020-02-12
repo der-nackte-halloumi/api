@@ -21,13 +21,13 @@ make db_start
 make db_stop
 # remove the local database container including a possible volume
 make db_clean
-# calls pgcli to connect to the local database container, requires pgcli to be in path
+# call pgcli to connect to the local database container, requires pgcli to be in path
 make db_cli
-# runs all migrations in the local database container
+# run all migrations in the local database container
 make migrations
-# runs the seed script, requires psql with same version as dockerised database in path
+# run the seed script, requires psql with same version as dockerised database in path
 make seeds
-# runs the acutal API
+# run the acutal API
 make run
 ```
 
