@@ -12,6 +12,7 @@ branches:
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_7ce11a41215f_key -iv $encrypted_7ce11a41215f_iv -in der-nackte-halloumi-api-travis.enc -out der-nackte-halloumi-api-travis -d
+  - chmod 400 der-nackte-halloumi-api-travis
 
 install: skip
 

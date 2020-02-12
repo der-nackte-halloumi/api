@@ -5,8 +5,6 @@ set -eo pipefail
 echo ">>> pushing latest images for api and migrations"
 ./scripts/docker_push.sh latest
 
-chmod 400 der-nackte-halloumi-api-travis
-
 echo $SERVER_PUBLIC_KEY >> $HOME/.ssh/known_hosts
 
 # run migrations
