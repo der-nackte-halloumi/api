@@ -1,4 +1,4 @@
-FROM migrate/migrate
+FROM migrate/migrate:v4.8.0
 
 COPY *sql migrations/
 

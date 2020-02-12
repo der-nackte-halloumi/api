@@ -36,7 +36,7 @@ func (r *RestAPI) Start() error {
 	return r.server.ListenAndServe()
 }
 
-func respondSuccess(w http.ResponseWriter, code int, body interface{}) {
+func respond(w http.ResponseWriter, code int, body interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 	json.NewEncoder(w).Encode(body)
