@@ -7,7 +7,7 @@ type Shop struct {
 	Name    string  `json:"name"`
 	Address string  `json:"address"`
 	Lat     float32 `json:"lat"`
-	Lng     float32 `json:"long"`
+	Lng     float32 `json:"lng"`
 }
 
 func ShopFromDomain(shop domain.Shop) *Shop {
