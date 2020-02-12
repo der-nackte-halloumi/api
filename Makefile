@@ -19,7 +19,7 @@ db_stop:
 	docker stop db-api
 
 db_clean:
-	docker rm -v db-api
+	docker rm -v db-api && docker volume rm dernacktehalloumi_db-api_data
 
 db_cli:
 	pgcli postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
