@@ -16,13 +16,13 @@ function image_exists () {
 
 image_exists "dernacktehalloumi/api:$1"
 if [ "$?" -eq 0 ]; then
-  echo "--> pushing dernacktehalloumi/api:$1"
+  echo ">>> pushing dernacktehalloumi/api:$1"
   docker push dernacktehalloumi/api:$1
 fi
 
 image_exists "dernacktehalloumi/migrations:$1"
 if [ "$?" -eq 0 ]; then
-  echo "--> pushing dernacktehalloumi/migrations:$1"
+  echo ">>> pushing dernacktehalloumi/migrations:$1"
   docker push dernacktehalloumi/migrations:$1
 fi
 
