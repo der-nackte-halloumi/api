@@ -1,0 +1,4 @@
+\copy shops(id, name, address, lat, long) FROM './seeds/shops.tsv';
+\copy products(id) FROM './seeds/products.tsv';
+\copy products_translations FROM './seeds/products_translations.tsv';
+\copy shops_products FROM './seeds/shops_products.tsv';

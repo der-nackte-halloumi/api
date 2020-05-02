@@ -35,7 +35,7 @@ migrations_down:
 		-database postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?sslmode=disable down -all
 
 seeds:
-	psql postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?sslmode=disable -a -f seeds/initial.sql
+	psql postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?sslmode=disable -a -f seeds/initial.sql -f seeds/psql-tsv-cmds
 
 run:
 	go run cmd/rest/main.go
