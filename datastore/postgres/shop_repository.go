@@ -57,7 +57,7 @@ func (s *shopRepository) FindShopsByQuery(ctx context.Context, search string, la
 		Select("products.id").
 		Distinct().
 		From("products").
-		Join("categories_translations on categories_translations.category_id = products.category_id").
+		LeftJoin("categories_translations on categories_translations.category_id = products.category_id").
 		Join("products_translations on products_translations.product_id = products.id").
 		Where(sq.Or{
 			sq.ILike{"categories_translations.value": "%" + search + "%"},
