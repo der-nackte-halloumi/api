@@ -20,6 +20,7 @@ func NewRestAPI(
 	router := mux.NewRouter()
 
 	router.HandleFunc("/shops", NewShopsHandler(searchShopService).Search).Methods(http.MethodGet)
+	router.NotFoundHandler = http.HandlerFunc(NewErrorHandler().NotFound)
 
 	server := &http.Server{
 		Addr:         "0.0.0.0:" + port,
