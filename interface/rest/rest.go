@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	rest "github.com/der-nackte-halloumi/api/interface/rest/models"
 	"github.com/der-nackte-halloumi/api/usecase/search_shop"
 	"github.com/gorilla/mux"
 )
@@ -41,4 +42,13 @@ func respond(w http.ResponseWriter, code int, body interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 	json.NewEncoder(w).Encode(body)
+}
+
+func respondWithError(w http.ResponseWriter, code int, message string) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+	json.NewEncoder(w).Encode(rest.Error{
+		Code:    code,
+		Message: message,
+	})
 }
