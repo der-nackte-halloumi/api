@@ -39,10 +39,7 @@ func (s *shopsHandler) Search(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Printf("error when searching shops: %v", err)
 
-		respond(w, http.StatusInternalServerError, rest.Error{
-			Code:    http.StatusInternalServerError,
-			Message: "error when searching for shops",
-		})
+		respondWithError(w, http.StatusInternalServerError, "error when searching for shops")
 		return
 	}
 

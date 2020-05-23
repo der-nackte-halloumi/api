@@ -16,6 +16,10 @@ before_install:
 
 install: skip
 
+before_script:
+  - touch .env
+  - make test
+
 script:
   - docker build -t dernacktehalloumi/api:${TRAVIS_BUILD_NUMBER} .
   - docker build -t dernacktehalloumi/migrations:${TRAVIS_BUILD_NUMBER} ./migrations
