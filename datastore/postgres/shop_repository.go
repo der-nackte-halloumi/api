@@ -72,7 +72,7 @@ func (s *shopRepository) FindShopsByQuery(ctx context.Context, search string, la
 	rows, err := s.executor.QueryxContext(ctx, sql, args...)
 
 	if err != nil {
-		log.Printf("error when executing query for product ids by query", err)
+		log.Printf("error when executing query for product ids by query: %v", err)
 		return nil, err
 	}
 
