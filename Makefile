@@ -1,7 +1,7 @@
 include .env
 export
 
-.PHONY: db_create db_start db_stop db_clean db_cli migrations migrations_down seeds run
+.PHONY: db_create db_start db_stop db_clean db_cli migrations migrations_down seeds run test
 
 db_create:
 	docker create --name db-api \
@@ -39,3 +39,6 @@ seeds:
 
 run:
 	go run cmd/rest/main.go
+
+test:
+	go test -v ./...

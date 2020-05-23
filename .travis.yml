@@ -17,6 +17,7 @@ before_install:
 install: skip
 
 script:
+  - make test
   - docker build -t dernacktehalloumi/api:${TRAVIS_BUILD_NUMBER} .
   - docker build -t dernacktehalloumi/migrations:${TRAVIS_BUILD_NUMBER} ./migrations
   - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then docker build -t dernacktehalloumi/api:latest .; fi

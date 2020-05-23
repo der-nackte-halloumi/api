@@ -20,6 +20,7 @@ func NewRestAPI(
 ) (*RestAPI, error) {
 	router := mux.NewRouter()
 
+	router.HandleFunc("/_health", NewStatusHandler().Health).Methods(http.MethodGet)
 	router.HandleFunc("/shops", NewShopsHandler(searchShopService).Search).Methods(http.MethodGet)
 	router.NotFoundHandler = http.HandlerFunc(NewErrorHandler().NotFound)
 
